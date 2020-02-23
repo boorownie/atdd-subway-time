@@ -3,12 +3,14 @@ package atdd.path.web;
 import atdd.path.application.StationService;
 import atdd.path.application.dto.CreateStationRequestView;
 import atdd.path.application.dto.StationResponseView;
+import atdd.path.application.dto.StationTimetableResponseView;
 import atdd.path.domain.Station;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -48,5 +50,10 @@ public class StationController {
     public ResponseEntity deleteStation(@PathVariable Long id) {
         stationService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/stations/{id}/timetables")
+    public ResponseEntity retrieveTimetable(@PathVariable Long id) {
+        return ResponseEntity.ok().body(Arrays.asList(new StationTimetableResponseView()));
     }
 }

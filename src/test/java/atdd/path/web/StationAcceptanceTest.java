@@ -2,9 +2,11 @@ package atdd.path.web;
 
 import atdd.AbstractAcceptanceTest;
 import atdd.path.application.dto.StationResponseView;
+import atdd.path.application.dto.StationTimetableResponseView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 
 import java.util.List;
@@ -102,5 +104,29 @@ public class StationAcceptanceTest extends AbstractAcceptanceTest {
         webTestClient.get().uri(STATION_URL + "/" + stationId)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @DisplayName("지하철역 시간표 조회")
+    @Test
+    void retrieveTimetable() {
+        // given
+        Long stationId = stationHttpTest.createStation(STATION_NAME);
+        Long stationId2 = stationHttpTest.createStation(STATION_NAME_2);
+        Long stationId3 = stationHttpTest.createStation(STATION_NAME_3);
+        Long lineId = lineHttpTest.createLine(LINE_NAME);
+        Long lineId2 = lineHttpTest.createLine(LINE_NAME_2);
+        lineHttpTest.createEdgeRequest(lineId, stationId, stationId2);
+        lineHttpTest.createEdgeRequest(lineId2, stationId, stationId3);
+
+        // when
+        List<StationTimetableResponseView> result = webTestClient.get().uri("/stations/" + stationId + "/timetables")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBodyList(StationTimetableResponseView.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(result.size()).isEqualTo(1);
     }
 }
