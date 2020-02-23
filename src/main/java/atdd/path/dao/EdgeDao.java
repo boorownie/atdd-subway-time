@@ -31,6 +31,7 @@ public class EdgeDao {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("LINE_ID", lineId);
         parameters.put("DISTANCE", edge.getDistance());
+        parameters.put("ELAPSED_TIME", edge.getElapsedTime());
         parameters.put("SOURCE_STATION_ID", edge.getSourceStation().getId());
         parameters.put("TARGET_STATION_ID", edge.getTargetStation().getId());
 
@@ -43,7 +44,8 @@ public class EdgeDao {
                 "select E.id as id, L.id as line_id, L.name as line_name, " +
                         "SS.id as source_station_id, SS.name as source_station_name, " +
                         "ST.id as target_station_id, ST.name as target_station_name, " +
-                        "E.distance " +
+                        "E.distance, " +
+                        "E.elapsed_time " +
                         "from EDGE E " +
                         "join STATION SS ON E.source_station_id = SS.id " +
                         "join STATION ST ON E.target_station_id = ST.id " +
@@ -56,7 +58,8 @@ public class EdgeDao {
                 (Long) result.get("ID"),
                 new Station((Long) result.get("SOURCE_STATION_ID"), (String) result.get("SOURCE_STATION_NAME")),
                 new Station((Long) result.get("TARGET_STATION_ID"), (String) result.get("TARGET_STATION_NAME")),
-                (int) result.get("DISTANCE")
+                (int) result.get("DISTANCE"),
+                (int) result.get("ELAPSED_TIME")
         );
     }
 

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Time;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -83,12 +84,14 @@ public class StationDao {
         if (hasLine(result)) {
             return Collections.EMPTY_LIST;
         }
-
         return result.stream()
                 .map(it ->
                         new Line(
-                                (Long) result.get(0).get("LINE_ID"),
-                                (String) result.get(0).get("LINE_NAME")
+                                (Long) it.get("LINE_ID"),
+                                (String) it.get("LINE_NAME"),
+                                ((Time) it.get("START_TIME")).toLocalTime(),
+                                ((Time) it.get("END_TIME")).toLocalTime(),
+                                (Integer) it.get("INTERVAL_TIME")
                         ))
                 .collect(Collectors.toList());
     }

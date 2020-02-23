@@ -62,9 +62,12 @@ public class LineHttpTest {
 
     public EntityExchangeResult createEdgeRequest(Long lineId, Long stationId, Long stationId2) {
         int distance = 10;
+        int elapsedTime = 10;
+
         String inputJson = "{\"sourceId\":" + stationId +
                 ",\"targetId\":" + stationId2 +
-                ",\"distance\":" + distance + "}";
+                ",\"distance\":" + distance +
+                ",\"elapsedTime\":" + elapsedTime + "}";
 
         return webTestClient.post().uri("/lines/" + lineId + "/edges")
                 .contentType(MediaType.APPLICATION_JSON)

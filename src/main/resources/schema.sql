@@ -22,6 +22,7 @@ create table if not exists EDGE
     source_station_id bigint not null,
     target_station_id bigint not null,
     distance int,
+    elapsed_time int,
     primary key(id)
 );
 

@@ -4,6 +4,7 @@ public class CreateEdgeRequestView {
     private Long sourceId;
     private Long targetId;
     private int distance;
+    private int elapsedTime;
 
     public Long getSourceId() {
         return sourceId;
@@ -15,5 +16,9 @@ public class CreateEdgeRequestView {
 
     public int getDistance() {
         return distance;
+    }
+
+    public int getElapsedTime() {
+        return elapsedTime;
     }
 }

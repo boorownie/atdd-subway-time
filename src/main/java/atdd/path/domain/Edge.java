@@ -5,19 +5,21 @@ public class Edge {
     private Station sourceStation;
     private Station targetStation;
     private int distance;
+    private int elapsedTime;
 
     public Edge() {
     }
 
-    public Edge(Long id, Station sourceStation, Station targetStation, int distance) {
+    public Edge(Long id, Station sourceStation, Station targetStation, int distance, int elapsedTime) {
         this.id = id;
         this.sourceStation = sourceStation;
         this.targetStation = targetStation;
         this.distance = distance;
+        this.elapsedTime = elapsedTime;
     }
 
-    public static Edge of(Station sourceStation, Station targetStation, int distance) {
-        return new Edge(null, sourceStation, targetStation, distance);
+    public static Edge of(Station sourceStation, Station targetStation, int distance, int elapsedTime) {
+        return new Edge(null, sourceStation, targetStation, distance, elapsedTime);
     }
 
     public Long getId() {
@@ -26,6 +28,10 @@ public class Edge {
 
     public int getDistance() {
         return distance;
+    }
+
+    public int getElapsedTime() {
+        return elapsedTime;
     }
 
     public Station getSourceStation() {
