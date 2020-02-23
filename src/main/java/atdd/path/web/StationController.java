@@ -5,6 +5,7 @@ import atdd.path.application.dto.CreateStationRequestView;
 import atdd.path.application.dto.StationResponseView;
 import atdd.path.application.dto.StationTimetableResponseView;
 import atdd.path.domain.Station;
+import atdd.path.domain.StationTimetable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,7 @@ public class StationController {
 
     @GetMapping("/stations/{id}/timetables")
     public ResponseEntity retrieveTimetable(@PathVariable Long id) {
-        return ResponseEntity.ok().body(Arrays.asList(new StationTimetableResponseView()));
+        List<StationTimetable> timetables = stationService.retrieveTimetables(id);
+        return ResponseEntity.ok().body(Arrays.asList(StationTimetableResponseView.listOf(timetables)));
     }
 }

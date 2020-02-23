@@ -1,8 +1,8 @@
 package atdd.path.application;
 
-import atdd.path.dao.LineDao;
 import atdd.path.dao.StationDao;
 import atdd.path.domain.Station;
+import atdd.path.domain.StationTimetable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +29,9 @@ public class StationService {
 
     public Station save(Station station) {
         return stationDao.save(station);
+    }
+
+    public List<StationTimetable> retrieveTimetables(Long stationId) {
+        return null;
     }
 }
