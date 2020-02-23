@@ -10,6 +10,9 @@ public class StationTimetableResponseView {
     private String lineName;
     private TimetableResponseView timetable;
 
+    public StationTimetableResponseView() {
+    }
+
     public StationTimetableResponseView(Long lineId, String lineName, TimetableResponseView timetable) {
         this.lineId = lineId;
         this.lineName = lineName;

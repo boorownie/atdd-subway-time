@@ -8,6 +8,9 @@ public class TimetableResponseView {
     private List<String> up;
     private List<String> down;
 
+    public TimetableResponseView() {
+    }
+
     public TimetableResponseView(List<String> up, List<String> down) {
         this.up = up;
         this.down = down;

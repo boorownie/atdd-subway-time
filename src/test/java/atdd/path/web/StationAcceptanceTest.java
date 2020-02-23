@@ -127,6 +127,6 @@ public class StationAcceptanceTest extends AbstractAcceptanceTest {
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.size()).isEqualTo(2);
     }
 }

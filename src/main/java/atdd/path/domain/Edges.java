@@ -127,4 +127,81 @@ public class Edges {
         newEdges.add(edge);
         return new Edges(newEdges);
     }
+
+    public int calculateTimeFormSourceEndStation(Station targetStation) {
+        if (findTargetEndStation().getId() == targetStation.getId()) {
+            return -1;
+        }
+
+        Station station = findSourceEndStation();
+        if (station.getId() == targetStation.getId()) {
+            return 0;
+        }
+
+        int time = 0;
+        while (true) {
+            Station savedStation = station;
+            Edge edge = edges.stream()
+                    .filter(it -> it.getSourceStation().getId() == savedStation.getId())
+                    .findFirst()
+                    .orElseThrow(RuntimeException::new);
+
+            time += edge.getDistance();
+            station = edge.getTargetStation();
+            if (station.getId() == targetStation.getId()) {
+                break;
+            }
+        }
+        return time;
+    }
+
+    public int calculateTimeFormTargetEndStation(Station sourceStation) {
+        if (findSourceEndStation().getId() == sourceStation.getId()) {
+            return -1;
+        }
+
+        Station station = findTargetEndStation();
+        if (station.getId() == sourceStation.getId()) {
+            return 0;
+        }
+
+        int time = 0;
+        while (true) {
+            Station savedStation = station;
+            Edge edge = edges.stream()
+                    .filter(it -> it.getTargetStation().getId() == savedStation.getId())
+                    .findFirst()
+                    .orElseThrow(RuntimeException::new);
+            time += edge.getDistance();
+            station = edge.getSourceStation();
+            if (station.getId() == sourceStation.getId()) {
+                break;
+            }
+        }
+        return time;
+    }
+
+    public Station findSourceEndStation() {
+        List<Station> targetStations = edges.stream()
+                .map(it -> it.getTargetStation())
+                .collect(Collectors.toList());
+
+        return edges.stream()
+                .map(it -> it.getSourceStation())
+                .filter(it -> !targetStations.contains(it))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public Station findTargetEndStation() {
+        List<Station> sourceStations = edges.stream()
+                .map(it -> it.getSourceStation())
+                .collect(Collectors.toList());
+
+        return edges.stream()
+                .map(it -> it.getTargetStation())
+                .filter(it -> !sourceStations.contains(it))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+    }
 }

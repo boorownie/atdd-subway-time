@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -56,6 +55,6 @@ public class StationController {
     @GetMapping("/stations/{id}/timetables")
     public ResponseEntity retrieveTimetable(@PathVariable Long id) {
         List<StationTimetable> timetables = stationService.retrieveTimetables(id);
-        return ResponseEntity.ok().body(Arrays.asList(StationTimetableResponseView.listOf(timetables)));
+        return ResponseEntity.ok().body(StationTimetableResponseView.listOf(timetables));
     }
 }

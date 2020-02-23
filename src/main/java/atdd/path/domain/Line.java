@@ -1,6 +1,7 @@
 package atdd.path.domain;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,7 +75,26 @@ public class Line {
         return this.edges;
     }
 
-    public StationTimetable getTimetableOf(Station persistStation) {
-        return new StationTimetable();
+    public StationTimetable getTimetableOf(Station station) {
+        List<LocalTime> defaultTimetable = findDefaultTimetable();
+        int upTime = edges.calculateTimeFormSourceEndStation(station);
+        int downTime = edges.calculateTimeFormTargetEndStation(station);
+
+        return new StationTimetable(id, name, Timetable.of(defaultTimetable, upTime, downTime));
+    }
+
+    private List<LocalTime> findDefaultTimetable() {
+        List<LocalTime> timetable = new ArrayList<>();
+        LocalTime time = startTime;
+        timetable.add(time);
+        while (true) {
+            time = time.plusMinutes(interval);
+            timetable.add(time);
+            if (time.equals(endTime) || time.isAfter(endTime)) {
+                break;
+            }
+        }
+
+        return timetable;
     }
 }
