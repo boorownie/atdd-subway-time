@@ -74,4 +74,7 @@ public class Line {
         return this.edges;
     }
 
+    public StationTimetable getTimetableOf(Station persistStation) {
+        return new StationTimetable();
+    }
 }

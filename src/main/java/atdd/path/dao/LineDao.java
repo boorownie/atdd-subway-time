@@ -111,4 +111,10 @@ public class LineDao {
                                 (int) it.getValue().get(0).get("ELAPSED_TIME")))
                 .collect(Collectors.toList());
     }
+
+    public List<Line> findByIds(List<Long> ids) {
+        return ids.stream()
+                .map(it -> findById(it))
+                .collect(Collectors.toList());
+    }
 }

@@ -5,6 +5,9 @@ public class StationTimetable {
     private String lineName;
     private Timetable timetable;
 
+    public StationTimetable() {
+    }
+
     public StationTimetable(Long lineId, String lineName, Timetable timetable) {
         this.lineId = lineId;
         this.lineName = lineName;
